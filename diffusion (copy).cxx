@@ -24,10 +24,11 @@ int main(){
   const double xmax = 20;
   const double dx = (xmax-xmin)/(N-1) ;
 
-  double dt = 0.01*dx;
+  double dt = dx;
   double t = 0;
   const int Na = 10;
   const int Nk = int(tEnd/Na/dt);
+
 
   double* u0 = new double[N];
   double* u1 = new double[N];
@@ -44,12 +45,6 @@ int main(){
   {
    for(int j=0; j<Nk; j++){
 
-     step(u1,u0,dt,dx,D,N);
-     
-     h = u0;
-     u0 = u1;
-     u1 = h;
-     t +=dt;     
 
    }
    strm.str("");
@@ -64,16 +59,10 @@ int main(){
   return 0;
 }
 //-----------------------------------------------
-void step(double* const u1, double* const u0,
+void step(double* const f1, double* const f0,
           const double dt, const double dx,
           const double D, const int N)
 {
-  u1[0] = dt*D/(dx*dx) * (u0[1] - 2*u0[0] + u0[N-1]) + u0[0];
-  u1[N-1] = dt*D/(dx*dx) * (u0[0] - 2*u0[N-1] + u0[N-1]) + u0[N-2];
-
-  for(int i=1; i<N-1; i++){
-    u1[i] = dt*D/(dx*dx) * (u0[i+1] - 2*u0[i] + u0[i-1]) + u0[i];
-  }
 
 }
 //-----------------------------------------------
